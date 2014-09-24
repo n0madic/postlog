@@ -118,7 +118,7 @@ for ($i = 0; $i < count($logfile); $i++) {
 			$logrows[$j]['text'] = substr($logfile[$i], strpos($logfile[$i], 'reject: ')+8);
 		} elseif (strpos($logfile[$i],"warning: ")) {
 			$logrows[$j]['status'] = 'warning';
-			$logrows[$j]['text'] = substr($logfile[$i], strpos($logfile[$i], 'reject: ')+8);
+			$logrows[$j]['text'] = substr($logfile[$i], strpos($logfile[$i], 'warning: ')+9);
 		} elseif (strpos($logfile[$i],"cbpolicyd")) {
 			$logrows[$j]['status'] = 'greylisted';
 			$logrows[$j]['from'] = GetSubStr($logfile[$i],'/from=(.*?),/', 1);;
@@ -250,8 +250,6 @@ for ($i = 0; $i < count($logrows); $i++) {
 		case "warning":
 			if ($filter == 'success') continue 2;
 			$rowstyle = "warning";
-			// highlight warning
-			$text = preg_replace('/warning: (.+)$/', 'warning: <b>$1</b>', $text);
 			break;
 		case "greylisted":
 			if (strpos($logrows[$i]['text'], "action=pass") !== false) {
