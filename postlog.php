@@ -182,7 +182,7 @@ if (isset($_REQUEST['filter'])) {
     <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filters<?echo $filter !== '' ? ' <span class="glyphicon glyphicon-ok text-right"></span>' : '';?> <span class="caret"></span></a>
+         <button class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-filter"></span> Filters <?echo $filter !== '' ? ' (enabled) ' : '';?><span class="caret"></span></button>
           <ul class="dropdown-menu" role="menu">
             <li data-selected-item="true"><a href="<?echo $_SERVER['SCRIPT_NAME'];?>">Disable<?echo $filter == '' ? ' <span class="glyphicon glyphicon-ok text-right"></span>' : '';?></a></li>
             <li class="divider"></li>
@@ -197,17 +197,17 @@ if (isset($_REQUEST['filter'])) {
         <div class="form-group">
           <input type="text" size="30" name="search" class="form-control" placeholder="Search in log" value="<?echo isset($_REQUEST['search']) ? $_REQUEST['search'] : '';?>">
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
       </form>
       <form class="navbar-form navbar-left" action="<?echo $_SERVER['REQUEST_URI'];?>" method="post">
         <div class="form-group">
 		Count lines 
           <input type="text" size="9" name="count" class="form-control" placeholder="Enter count" value="<? echo $count;?>">
         </div>
-        <button type="submit" class="btn btn-info">Apply</button>
+        <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-ok"></span> Apply</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <a href="?logout" class="btn btn-warning navbar-btn">Logout</a>
+        <a href="?logout" class="btn btn-warning navbar-btn"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
       </ul>
     </div><!-- /.navbar-collapse -->
 <? } ?>
