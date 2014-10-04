@@ -148,6 +148,7 @@ if (isset($_REQUEST['filter'])) {
 }
 
 ?>
+<!DOCTYPE html>
 <html>
 <head>
 <title>Postfix log viewer</title>
