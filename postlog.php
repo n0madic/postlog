@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 //// BEGIN CONFIG ////
 define('ADMIN_PASS', 'f379eaf3c831b04de153469d1bec345e');
@@ -154,19 +154,15 @@ if (isset($_REQUEST['filter'])) {
 <title>Postfix log viewer</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
 <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-<script type="text/javascript">
-    function goToBottom() {
-	location.href = "#bottom";
-    }
-</script>
 </head>
-<body onload="goToBottom();">
+<body onload="window.scrollTo(0,document.body.scrollHeight);" style="padding-top: 70px;">
 <div class="container">
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -176,34 +172,34 @@ if (isset($_REQUEST['filter'])) {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?echo $_SERVER['SCRIPT_NAME'];?>">Postfix log viewer</a>
+      <a class="navbar-brand" href="<?php echo $_SERVER['SCRIPT_NAME'];?>">Postfix log viewer</a>
     </div>
-<? if(isset($_SESSION['u_login'])){ ?>
+<?php if(isset($_SESSION['u_login'])){ ?>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-         <button class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-filter"></span> Filters <?echo $filter !== '' ? ' (enabled) ' : '';?><span class="caret"></span></button>
+         <button class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-filter"></span> Filters <?php echo $filter !== '' ? ' (enabled) ' : '';?><span class="caret"></span></button>
           <ul class="dropdown-menu" role="menu">
-            <li data-selected-item="true"><a href="<?echo $_SERVER['SCRIPT_NAME'];?>">Disable<?echo $filter == '' ? ' <span class="glyphicon glyphicon-ok text-right"></span>' : '';?></a></li>
+            <li data-selected-item="true"><a href="<?php echo $_SERVER['SCRIPT_NAME'];?>">Disable<?php echo $filter == '' ? ' <span class="glyphicon glyphicon-ok text-right"></span>' : '';?></a></li>
             <li class="divider"></li>
-            <li><a href="?filter=success">Only successful<?echo $filter == 'success' ? ' <span class="glyphicon glyphicon-ok"></span>' : '';?></a></li>
-            <li><a href="?filter=fails">Only fails<?echo $filter == 'fails' ? ' <span class="glyphicon glyphicon-ok"></span>' : '';?></a></li>
+            <li><a href="?filter=success">Only successful<?php echo $filter == 'success' ? ' <span class="glyphicon glyphicon-ok"></span>' : '';?></a></li>
+            <li><a href="?filter=fails">Only fails<?php echo $filter == 'fails' ? ' <span class="glyphicon glyphicon-ok"></span>' : '';?></a></li>
             <li class="divider"></li>
-            <li><a href="?filter=nogarbage">No garbage<?echo $filter <> '' ? ' <span class="glyphicon glyphicon-ok"></span>' : '';?></a></li>
+            <li><a href="?filter=nogarbage">No garbage<?php echo $filter <> '' ? ' <span class="glyphicon glyphicon-ok"></span>' : '';?></a></li>
           </ul>
         </li>
       </ul>
-      <form class="navbar-form navbar-left" role="search" action="<?echo $_SERVER['REQUEST_URI'];?>" method="post">
+      <form class="navbar-form navbar-left" role="search" action="<?php echo $_SERVER['REQUEST_URI'];?>" method="post">
         <div class="form-group">
-          <input type="text" size="30" name="search" class="form-control" placeholder="Search in log" value="<?echo isset($_REQUEST['search']) ? $_REQUEST['search'] : '';?>">
+          <input type="text" size="30" name="search" class="form-control" placeholder="Search in log" value="<?php echo isset($_REQUEST['search']) ? $_REQUEST['search'] : '';?>">
         </div>
         <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
       </form>
-      <form class="navbar-form navbar-left" action="<?echo $_SERVER['REQUEST_URI'];?>" method="post">
+      <form class="navbar-form navbar-left" action="<?php echo $_SERVER['REQUEST_URI'];?>" method="post">
         <div class="form-group">
 		Count lines 
-          <input type="text" size="9" name="count" class="form-control" placeholder="Enter count" value="<? echo $count;?>">
+          <input type="text" size="9" name="count" class="form-control" placeholder="Enter count" value="<?php echo $count;?>">
         </div>
         <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-ok"></span> Apply</button>
       </form>
@@ -211,10 +207,10 @@ if (isset($_REQUEST['filter'])) {
         <a href="?logout" class="btn btn-warning navbar-btn"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
       </ul>
     </div><!-- /.navbar-collapse -->
-<? } ?>
+<?php } ?>
   </div><!-- /.container-fluid -->
 </nav>
-<?
+<?php
 if(!isset($_SESSION['u_login'])){
     ?>
 	<label for="InputPassword1">Please enter password for access:</label>
@@ -228,14 +224,14 @@ if(!isset($_SESSION['u_login'])){
 	</div>
 	</body>
 	</html>
-<?
+<?php
 	exit;
 }
 ?>
 <table id="log" class="table table-hover table-condensed">
 <thead><tr><th width="15%">Datetime</th><th width="15%">Status</th><th>FROM</th><th>TO</th></tr></thead>
 <tbody>
-<?
+<?php
 for ($i = 0; $i < count($logrows); $i++) {
 	if (isset($_REQUEST['status'])) {
 		if ($_REQUEST['status'] !== $logrows[$i]['status']) continue;
@@ -303,7 +299,8 @@ for ($i = 0; $i < count($logrows); $i++) {
 }
 ?>
 </table>
-<a name="bottom" class="back-to-top glyphicon glyphicon-arrow-up well well-sm" href="#top" title="Top"></a>
+<button class="glyphicon glyphicon-arrow-up well well-sm" onClick="window.scrollTo(0,0);" title="Top"></button>
 </div> <!-- /.container -->
 </body>
 </html>
+<?php //EOF// ?>
